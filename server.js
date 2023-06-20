@@ -1,7 +1,6 @@
 // Import required modules
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 // Import database connection function
 const connectDB = require('./config/db');

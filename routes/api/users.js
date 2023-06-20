@@ -28,10 +28,10 @@ router.get('/', async (req, res) => {
 // @route  GET api/users/:name
 // @desc   Get specific user by name
 // @access Public
-router.get('/:name', async (req, res) => {
+router.get('/:username', async (req, res) => {
     try {
-        const name = req.params.name
-        const user = await User.findOne({ name });
+        const username = req.params.username
+        const user = await User.findOne({ username });
         return res.json({ user })
     } catch (err) {
         console.error(err.message);
@@ -42,10 +42,10 @@ router.get('/:name', async (req, res) => {
 // @route  DELETE api/users/:name
 // @desc   Remove specific user by name
 // @access Public
-router.delete('/:name', async (req, res) => {
+router.delete('/:username', async (req, res) => {
     try {
-        const name = req.params.name
-        const user = await User.findOne({ name });
+        const username = req.params.username
+        const user = await User.findOne({ username });
         user.remove()
         return res.json({ msg: "Deleted successfully" })
     } catch (err) {
@@ -59,7 +59,7 @@ router.delete('/:name', async (req, res) => {
 // @access Public
 router.post('/',
     [
-        check('name', 'Name is required')
+        check('username', 'Name is required')
             .not()
             .isEmpty(),
         check('email', 'Please include a valid email').isEmail(),
@@ -70,7 +70,7 @@ router.post('/',
     ],
     validateSchema,
     async (req, res) => {
-        const { name, email, password } = req.body;
+        const { username, email, password } = req.body;
         try {
             let user = await User.findOne({ email });
 
@@ -81,7 +81,7 @@ router.post('/',
             }
 
             user = new User({
-                name,
+                username,
                 email,
                 password,
             });
