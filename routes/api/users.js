@@ -1,8 +1,12 @@
+// Import required modules
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
+
+// Import middleware
 const validateSchema = require('../../middleware/validate-schema');
 
+// Import User model
 const User = require('../../models/User');
 
 const router = express.Router();
@@ -21,7 +25,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route  GET api/users/name
+// @route  GET api/users/:name
 // @desc   Get specific user by name
 // @access Public
 router.get('/:name', async (req, res) => {
@@ -35,7 +39,7 @@ router.get('/:name', async (req, res) => {
     }
 });
 
-// @route  DELETE api/users/name
+// @route  DELETE api/users/:name
 // @desc   Remove specific user by name
 // @access Public
 router.delete('/:name', async (req, res) => {
@@ -64,7 +68,8 @@ router.post('/',
             'Please enter password minimum with 6 characters'
         ).isLength({ min: 6 }),
     ],
-    validateSchema, async (req, res) => {
+    validateSchema,
+    async (req, res) => {
         const { name, email, password } = req.body;
         try {
             let user = await User.findOne({ email });
